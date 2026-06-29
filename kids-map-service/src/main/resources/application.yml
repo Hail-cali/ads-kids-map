@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: ads-kis-map-api
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.finstream: INFO
+    org.apache.kafka: WARN
