@@ -6,6 +6,17 @@ spring:
     mongodb:
       uri: ${MONGO_URI:mongodb://localhost:27017/kidsmap}
 
+  kafka:
+    bootstrap-servers: ${KAFKA_URI:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+
 server:
   port: 8080
 
