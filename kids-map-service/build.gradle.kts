@@ -38,6 +38,9 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
+    // kafka∂ç
+    implementation("org.springframework.kafka:spring-kafka")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
