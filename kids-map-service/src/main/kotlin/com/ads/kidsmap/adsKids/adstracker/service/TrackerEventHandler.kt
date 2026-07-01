@@ -20,10 +20,13 @@ class TrackerEventHandler(
     override suspend fun handle(
         data: String
     ) {
-        val event = injest(data)
-        if (!filter(event)) return
-        validate(event)
-        publish(event)
+        injest(data).takeIfSuspend { event ->
+            filter(event)
+        }?.also {
+            validate(it)
+        }?.also {
+            validate(it)
+        }
     }
 
     override suspend fun publish(event: TrackingEvent) {

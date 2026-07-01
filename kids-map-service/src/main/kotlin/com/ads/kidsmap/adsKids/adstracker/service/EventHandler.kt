@@ -14,4 +14,9 @@ interface EventHandler<T: KafkaEvent> {
         return true
     }
 
+    suspend fun <T> T.takeIfSuspend(
+        predicate: suspend (T) -> Boolean
+    ): T? = if (predicate(this)) this else null
 }
+
+
