@@ -25,7 +25,7 @@ class TrackerEventHandler(
         }?.also {
             validate(it)
         }?.also {
-            validate(it)
+            publish(it)
         }
     }
 
