@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class BuildFinalContextStep : PipelineStep<DaBidContextBuilder, DaBidContext> {
     override val name = "BuildFinal"
-    override val dropReason = DropReason.NON_VALID_REQUEST
+    override val dropReason = DropReason.UNSPECIFIED
 
     override suspend fun process(
         builder: DaBidContextBuilder,

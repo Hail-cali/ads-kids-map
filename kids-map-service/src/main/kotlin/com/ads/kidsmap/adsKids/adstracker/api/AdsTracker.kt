@@ -32,7 +32,7 @@ class AdsTracker(
     }
 
     @GetMapping("/v1")
-    suspend fun trackers(
+    suspend fun debug(
         @RequestParam("data") data: String? = null,
     ): ResponseEntity<String> {
 

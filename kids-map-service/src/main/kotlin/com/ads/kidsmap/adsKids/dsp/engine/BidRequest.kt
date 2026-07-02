@@ -10,5 +10,10 @@ data class BidRequest(
         val placeId: String? = null,
         val eventId: String? = null,
         val goodsId: String? = null,
-    )
+        val keyword: String? = null,
+    ) {
+        companion object {
+            val EMPTY = Seed()
+        }
+    }
 }
