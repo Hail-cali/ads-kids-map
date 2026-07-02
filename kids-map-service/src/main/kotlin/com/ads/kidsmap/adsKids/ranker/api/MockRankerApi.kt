@@ -12,9 +12,9 @@ class MockRankerApi {
     companion object {
         val MOCK_RESPONSE = MockRanker.Response(
             adCandidates = listOf(
-                MockRanker.AdCanidate("12", 0.1),
-                MockRanker.AdCanidate("101", 0.5),
-                MockRanker.AdCanidate("102", 0.7),
+                MockRanker.AdCandidate("12", 0.1),
+                MockRanker.AdCandidate("101", 0.5),
+                MockRanker.AdCandidate("102", 0.7),
             ),
             producerId = "RAW_MOCK_LR"
         )
@@ -29,11 +29,11 @@ object MockRanker {
     )
 
     data class Response(
-        val adCandidates: List<AdCanidate>,
+        val adCandidates: List<AdCandidate>,
         val producerId: String,
     )
 
-    data class AdCanidate(
+    data class AdCandidate(
         val adId: String,
         val rawQualityScore: Double,
     )

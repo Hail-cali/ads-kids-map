@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component
 class DaBidPipeline(
     private val engine: PipelineEngine,
     private val createContextBuilderStep: CreateContextBuilderStep,
+    private val loadCandidateStep: LoadCandidateStep,
     private val buildFinalContextStep: BuildFinalContextStep,
 ) {
     suspend fun execute(
@@ -22,6 +23,9 @@ class DaBidPipeline(
         request = request,
         spec = PipelineSpec { bidRequest ->
             createContextBuilderStep.process(bidRequest)
+                .then {
+                    loadCandidateStep.process(it)
+                }
                 .then {
                     buildFinalContextStep.process(it)
                 }
