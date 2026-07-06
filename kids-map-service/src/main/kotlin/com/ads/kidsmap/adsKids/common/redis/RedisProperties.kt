@@ -7,7 +7,8 @@ data class RedisProperties(
     val mode: RedisMode,
     val host: String,
     val port: Int,
-    val password: String,
+    val password: String? = null,
+    val commandTimeoutMs: Long,
     val cluster: ClusterSetting = ClusterSetting(),
 ) {
     data class ClusterSetting(
