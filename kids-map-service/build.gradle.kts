@@ -38,8 +38,11 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    // kafka∂ç
+    // kafka
     implementation("org.springframework.kafka:spring-kafka")
+
+    // redis - dsp
+    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

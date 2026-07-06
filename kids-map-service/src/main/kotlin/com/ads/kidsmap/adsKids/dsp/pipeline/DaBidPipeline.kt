@@ -16,6 +16,7 @@ class DaBidPipeline(
     private val createContextBuilderStep: CreateContextBuilderStep,
     private val loadCandidateStep: LoadCandidateStep,
     private val buildFinalContextStep: BuildFinalContextStep,
+    private val retrieveActiveCampaignStep: RetrieveActiveCampaignStep
 ) {
     suspend fun execute(
         request: BidRequest
@@ -25,6 +26,9 @@ class DaBidPipeline(
             createContextBuilderStep.process(bidRequest)
                 .then {
                     loadCandidateStep.process(it)
+                }
+                .then {
+                    retrieveActiveCampaignStep.process(it)
                 }
                 .then {
                     buildFinalContextStep.process(it)

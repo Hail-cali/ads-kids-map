@@ -24,3 +24,10 @@ logging:
   level:
     com.finstream: INFO
     org.apache.kafka: WARN
+
+dsp:
+  redis:
+    mode: standalone
+    host: localhost
+    port: 6379
+    password:
