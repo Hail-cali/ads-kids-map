@@ -14,7 +14,7 @@ class RetrieveActiveCampaignStep : PipelineStep<DaBidContextBuilder, DaBidContex
     override suspend fun process(
         input: DaBidContextBuilder
     ): PipelineResult<DaBidContextBuilder> {
-
+        input.alivedCandidates
         return PipelineResult.Alive(
             builder = input
         )
