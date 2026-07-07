@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: ./kids-map-service
+      dockerfile: docer/Dockerfile
+    environment:
+      MONGO_URI: mongodb://mongo:27017/kidsmap
+      KAFKA_URI: redpanda:9092
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_started
+      redis:
+        condition: service_started
+      redpanda:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+
+  redpanda:
+    image: redpandadata/redpanda:v24.3.7
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp=1
+      - --memory=512M
+      - --reserve-memory=0M
+      - --node-id=0
+      - --check=false
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr=PLAINTEXT://redpanda:9092
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  mongo-data:
+  redis-data:
+  redpanda-data:

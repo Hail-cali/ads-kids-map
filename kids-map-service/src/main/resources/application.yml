@@ -28,6 +28,7 @@ logging:
 dsp:
   redis:
     mode: standalone
-    host: localhost
-    port: 6379
-    password:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    command-timeout-ms: ${REDIS_COMMAND_TIMEOUT_MS:3000}
