@@ -8,10 +8,14 @@ class CampaignCacheClient(
     private val redisClient: RedisClient,
 ) {
     suspend fun get(
-        campaignId: String,
-    ): CampaignCacheDto? = redisClient.get(campaignId, CampaignCacheDto::class.java)
+        adId: String,
+    ): CampaignCacheDto? = redisClient.get(
+        keys(adId),
+        CampaignCacheDto::class.java
+    )
 
     companion object {
+        fun keys(adId: String) = "adid:cam:$adId"
         data class CampaignCacheDto(
             val id: String,
         )

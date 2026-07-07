@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository
 interface PlaceQueryRepository {
     suspend fun batchGetPlaces(
         ids: Set<ObjectId>
-    ): List<PlaceFacade>
+    ): List<Places>
 
     suspend fun findById(
         id: ObjectId,
-    ): PlaceFacade?
+    ): Places?
 }
 
 @Repository
@@ -26,7 +26,7 @@ class PlaceQueryRepositoryImpl(
 ) : PlaceQueryRepository {
     override suspend fun batchGetPlaces(
         ids: Set<ObjectId>
-    ): List<PlaceFacade> {
+    ): List<Places> {
         val query = Query()
 
         query.addCriteria(
@@ -39,12 +39,12 @@ class PlaceQueryRepositoryImpl(
 
         val results = reactiveMongoTemplate.find(query, Places::class.java)
 
-        return results.map { PlaceFacade.from(it) }.collectList().awaitSingle()
+        return results.collectList().awaitSingle()
     }
 
     override suspend fun findById(
         id: ObjectId,
-    ): PlaceFacade? {
+    ): Places? {
         val query = Query()
         query.addCriteria(
             Criteria.where(Places::id.name).`is`(id)
@@ -52,6 +52,6 @@ class PlaceQueryRepositoryImpl(
 
         val result = reactiveMongoTemplate.findOne(query, Places::class.java)
 
-        return result.map { PlaceFacade.from(it) }.awaitFirstOrNull()
+        return result.awaitFirstOrNull()
     }
 }
