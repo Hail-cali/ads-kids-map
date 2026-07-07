@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.ads.kidsmap"
-version "0.0.1"
+version = "0.0.1"
 
 java {
     toolchain {
