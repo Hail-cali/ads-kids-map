@@ -6,9 +6,14 @@ data class Ad(
     var campaignId: String? = null,
     val qualityScore: Double,
     var auctionResult: AuctionResult? = null,
+    var creative: Creative? = null,
 ) {
     data class AuctionResult(
         val bidPrice: Long,
         var winPrice: Long? = null,
+    )
+
+    data class Creative(
+        val creativeId: String,
     )
 }
