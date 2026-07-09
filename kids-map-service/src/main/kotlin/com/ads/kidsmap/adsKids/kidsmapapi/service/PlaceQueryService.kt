@@ -14,8 +14,12 @@ class PlaceQueryService(
     suspend fun batchGetPlaces(
         ids: List<String>
     ): List<PlaceFacade> {
+        if (ids.isEmpty()) {
+            return emptyList()
+        }
+
         val response = placeQueryRepository.batchGetPlaces(
-            ids = ids.map { ObjectId(it) }.toSet()
+            ids = ids.map(::toObjectId).toSet()
         )
         val metadataMap = placeMetadataQueryRepository.batchGetPlaceIds(
             placeIds = response.map { it.id!! }
@@ -33,12 +37,27 @@ class PlaceQueryService(
         id: String,
     ): PlaceFacade? {
 
+        val placeId = toObjectId(id)
         val response = placeQueryRepository.findById(
-            ObjectId(id)
+            placeId
         ) ?: return null
+        val placeMetadata = placeMetadataQueryRepository.findByPlaceId(
+            placeId
+        )
 
         return PlaceFacade.from(
-            places = response
+            places = response,
+            placeMetadata = placeMetadata,
         )
+    }
+
+    private fun toObjectId(
+        id: String,
+    ): ObjectId {
+        require(ObjectId.isValid(id)) {
+            "Invalid ObjectId: $id"
+        }
+
+        return ObjectId(id)
     }
 }

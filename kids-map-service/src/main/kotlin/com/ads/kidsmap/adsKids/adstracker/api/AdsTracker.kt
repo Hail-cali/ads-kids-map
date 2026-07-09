@@ -24,9 +24,15 @@ class AdsTracker(
     suspend fun trackers(
         @RequestBody data: String,
     ): ResponseEntity<String> {
-        trackingEventProducer.handle(
-            data
-        )
+        runCatching {
+            trackingEventProducer.handle(
+                data
+            )
+        }.onFailure { exception ->
+            logger.warn(exception) {
+                "failed to handle tracker event"
+            }
+        }
         // do not allow to guess tracker's status
         return ResponseEntity.ok().build()
     }
