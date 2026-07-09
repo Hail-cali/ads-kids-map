@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: ./kids-map-service
-      dockerfile: docer/Dockerfile
+      dockerfile: docker/Dockerfile
     environment:
       MONGO_URI: mongodb://mongo:27017/kidsmap
       KAFKA_URI: redpanda:9092
