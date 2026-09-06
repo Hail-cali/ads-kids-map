@@ -2,6 +2,8 @@
 
 discover kid's friendly places activities and events
 
+location based ads recommendation
+
 ## Local Docker tunnel
 
 The application can be started with a single local entry point at `http://localhost:8080`.
